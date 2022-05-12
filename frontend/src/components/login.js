@@ -5,12 +5,7 @@ import "./Background.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-  crossorigin="anonymous"
-/>;
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>;
 
 const Login = () => {
 
@@ -78,14 +73,11 @@ const Login = () => {
                 </p>
               </div>
             </div>
-
             <br />
             <form>
               {/* 1st Section Row1 */}
               <div className="form-group text-left">
-                <label className="text-left p-2">
-                  <i className="bi bi-envelope-fill"></i> Email
-                </label>
+                <label className="text-left p-2"> <i className="bi bi-envelope-fill"></i> Email</label>
                 <input required ref={userRef} onChange={onChangehandleInputValue} value={email} type="text" className="form-control text-xs bg-slate-900" placeholder="Enter your email address"
                 />
               </div>
@@ -127,7 +119,6 @@ const Login = () => {
               </div>
               {/* End of 5th Section Row5*/}
             </form>
-
           </div>
           <div className="col-sm col-md col-lg ">&ensp;</div>
         </div>
