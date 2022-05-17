@@ -78,7 +78,7 @@ const Login = () => {
               {/* 1st Section Row1 */}
               <div className="form-group text-left">
                 <label className="text-left p-2"> <i className="bi bi-envelope-fill"></i> Email</label>
-                <input required ref={userRef} onChange={onChangehandleInputValue} value={email} type="text" className="form-control text-xs bg-slate-900" placeholder="Enter your email address"
+                <input required ref={userRef} onChange={onChangehandleInputValue} pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" value={email} type="text" className="form-control text-xs bg-slate-900" placeholder="Enter your email address"
                 />
               </div>
               <div className="form-group  text-left">

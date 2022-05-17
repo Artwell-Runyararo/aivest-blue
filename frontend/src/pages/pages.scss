@@ -1,0 +1,12 @@
+.bg-picture {
+    background: url("../Images/online.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+.bg-image {
+    background: rgb(0, 0, 0) !important;
+    background: linear-gradient(90deg, rgba(0,11,34,1) 14%, rgba(2, 0, 33, 0.8) 50%, rgba(2,0,33, 1) 100%) !important;
+}
+
+

@@ -1,0 +1,37 @@
+.bg-picture {
+  background: url("../Images/online.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.bg-image {
+  background: black !important;
+  background: -webkit-gradient(linear, left top, right top, color-stop(14%, #000b22), color-stop(50%, rgba(2, 0, 33, 0.8)), to(#020021)) !important;
+  background: linear-gradient(90deg, #000b22 14%, rgba(2, 0, 33, 0.8) 50%, #020021 100%) !important;
+}
+
+/* Inactive tab */
+.myClass ul > li > a {
+  background-color: white !important;
+  color: red !important;
+}
+
+.myClass ul > li > a:hover {
+  background-color: pink !important;
+}
+
+/* Active tab */
+.myClass ul > li.active > a,
+.myClass ul > li.active > a:hover,
+.myClass ul > li.active > a:focus {
+  background-color: red !important;
+  color: white !important;
+}
+
+/* Disabled tab */
+.myClass ul > li.disabled > a {
+  background-color: lightgray !important;
+  color: darkgray !important;
+}
+/*# sourceMappingURL=pages.css.map */

@@ -11,16 +11,21 @@ const Entreprenuer = () => {
 
 
     //  users variables declared for storing input from form 
-    const [stateValue, setState] = useState("");
-    const [investEmail, setEmail] = useState("");
+    const [categoryValue, setCategory] = useState("");
+    const [totalFund, setFund] = useState("");
+    const [foundingYear, setYear] = useState("");
 
     // Getting user inputs from form field
     const handleInputChange = (event) => {
-        setState(event.target.value);
+        setCategory(event.target.value);
     };
     const handleInputChange1 = (event) => {
-        setEmail(event.target.value);
+        setFund(event.target.value);
     };
+    const handleInputChange2 = (event) => {
+        setYear(event.target.value);
+    };
+
 
     // Settting input field to focus
     const userRef = useRef();
@@ -33,6 +38,7 @@ const Entreprenuer = () => {
     // Inputs message error focus
     const [focused, setFocused] = useState(false)
     const [focused1, setFocused1] = useState(false)
+    // const [focused2, setFocused2] = useState(false)
 
     const handleFocus = (e) => {
         setFocused(true)
@@ -40,6 +46,24 @@ const Entreprenuer = () => {
     const handleFocus1 = (e) => {
         setFocused1(true)
     }
+    // const handleFocus2 = (e) => {
+    //     setFocused2(true)
+    // }
+
+    // Submitting the values to the server
+    // const onSubmit = () => {
+    //     axios.post("http://localhost:4000/addInvestors", {
+    //         inputUserName: stateValue,
+    //         inputInvestorsEmail: investEmail,
+    //         inputInvestorsAddress: investAddress,
+    //         inputInvestorsPhone: investPhone,
+    //         inputInvestorsCompany: investCompany,
+    //         inputInvestorsPassword: investPassword,
+    //         inputRole: role,
+    //     }).then((response) => {
+    //         console.log(response);
+    //     });
+    // };
 
     return (
         <>
@@ -64,14 +88,14 @@ const Entreprenuer = () => {
                 <div className="row">
                     <div className="col-sm col-md col-lg p-0">
                         <div style={{ display: 'block' }}>
-                            <Tabs className="myClass bg-light rouded-0 border-0" defaultActiveKey="first">
+                            <Tabs className="myClass bg-light rouded-0 border-0" defaultActiveKey="second">
                                 <Tab eventKey="first" title="Make Proposals">
                                     <div className="container-fluid">
                                         <div className="row bg-white p-5 pt-0">
                                             <div className="col-sm col-md col-lg">&ensp;</div>
                                             <div className="col-sm col-md col-lg-8 rounded-md mt-5 p-5 border-1 text-slate-500">
                                                 <div className="text-xs p-1">
-                                                    <strong className="mt-6 text-center text-3xl font-extrabold text-gray-900">Predict Your Business</strong>
+                                                    <strong className="mt-6 text-center text-3xl font-extrabold text-gray-900">Business Proposal</strong>
                                                     <p className="mt-2 text-center text-xs text-gray-600"> And{' '}
                                                         <span style={{ textDecoration: 'none !important' }} className="font-medium text-primary hover:text-green-500"> be part of the world leaders in business</span>
                                                     </p>
@@ -81,36 +105,35 @@ const Entreprenuer = () => {
                                                     {/* 1st Section Row1 */}
                                                     <div className="row">
                                                         <div className="col-sm col-md col-lg text-left">
-                                                            <label className="text-left p-2"> <i className="bi bi-bank2"></i> Enter your total funding </label>
-                                                            <input onBlur={handleFocus} focused={focused.toString()} pattern="^[0-9]*$" aria-describedby="fundHelpBlock" required ref={userRef} name="fund" value={stateValue} onChange={handleInputChange} type="text" className="form-control input  w-full text-sm leading-6  rounded-md py-2 pl-10  bg-slate-900 " />
-                                                            <div id="fundHelpBlock" className="form-text formtext text-danger">Only numbers or intergers allowed, please insert a vaild year</div>
+                                                            <label className="text-left p-2"> <i className="bi bi-telephone-fill"></i> Enter Business Total Funding </label>
+                                                            <input onBlur={handleFocus} focused={focused.toString()} pattern="^[0-9]*$" required aria-describedby="phoneHelpBlock" name="phone" value={totalFund} onChange={handleInputChange} type="text" className="form-control w-full text-sm leading-6  rounded-md py-2 pl-10  bg-slate-900  " />
+                                                            <div id="phoneHelpBlock" className="form-text  formtext text-danger">Only numbers or intergers allowed, please insert a vaild year</div>
                                                         </div>
                                                         <div className="col-sm col-md col-lg text-left">
-                                                            <label className="text-left p-2"> <i className="bi bi-calendar-fill"></i> Enter your founding year</label>
-                                                            <input onBlur={handleFocus1} focused={focused1.toString()} required pattern="^[0-9]*$" aria-describedby="yearlHelpBlock" name="year" value={investEmail} onChange={handleInputChange1} type="text" className="form-control w-full text-sm leading-6  rounded-md py-2 pl-10  bg-slate-900  " />
-                                                            <div id="yearlHelpBlock" className="form-text  formtext text-danger">Only numbers or intergers allowed, please insert a vaild year</div>
+                                                            <label className="text-left p-2"> <i className="bi bi-telephone-fill"></i> Enter Business Founding Year </label>
+                                                            <input onBlur={handleFocus1} focused={focused1.toString()} pattern="^[0-9]*$" required aria-describedby="phoneHelpBlock" name="phone" value={foundingYear} onChange={handleInputChange1} type="text" className="form-control w-full text-sm leading-6  rounded-md py-2 pl-10  bg-slate-900  " />
+                                                            <div id="phoneHelpBlock" className="form-text  formtext text-danger">Only numbers or intergers allowed, please insert a vaild year</div>
                                                         </div>
-                                                    </div>
-                                                    {/* End of 1st Section Row1 */}
-                                                    {/* Row3 */}
-                                                    <div className="row">
                                                         <div className="col-sm col-md col-lg text-left">
                                                             <label htmlFor="" className="text-left p-2"><i className="bi bi-person-check-fill"></i> Select your category </label>
-                                                            <select required aria-describedby="HelpBlock" name="role" className="form-control  pt-1 w-full text-sm leading-6  rounded-md py-2 pl-10  bg-slate-900 ">
+                                                            <select required aria-describedby="HelpBlock" name="role" onChange={handleInputChange2} className="form-control  pt-1 w-full text-sm leading-6  rounded-md py-2 pl-10  bg-slate-900 ">
                                                                 <option hidden className="text-primary">Select category ...</option>
-                                                                <option >Investor</option>
+                                                                <option value={categoryValue}>Investor</option>
                                                                 <option value="Entreprenuer">Entreprenuer</option>
                                                             </select>
                                                             {/* <div id="HelpBlock" class="form-text">{errors.role?.message}</div> */}
                                                         </div>
                                                     </div>
-                                                    {/* End of row3 */}
+                                                    {/* End of 1st Section Row1 */}
+
+                                                    {/* End of 4th Section Row4*/}
                                                     <br /> {/* 5th Section Row4 */}
                                                     <div className="row">
                                                         <div className="col-sm col-md col-lg text-left">
                                                             <br />
-                                                            <button type="submit" className="btn bg-primary login-with-google-btn btn-block form-control"><i class="bi bi-arrow-counterclockwise text-light"></i> Procces</button>
-                                                            <p className="pl-0 pt-4 text-xs font-medium text-blue-600">&ensp;</p>
+                                                            {/* onClick={onSubmit}  */}
+                                                            <button type="submit" className="btn bg-primary login-with-google-btn btn-block form-control"> <i className="bi bi-arrow-right-circle-fill text-light"></i> Sign Up </button>
+                                                            <p className="pl-0 pt-4 text-xs font-medium text-blue-600"> Already a member, please sign in here.</p>
                                                         </div>
                                                     </div>
                                                     {/* End of 5th Section Row4*/}
