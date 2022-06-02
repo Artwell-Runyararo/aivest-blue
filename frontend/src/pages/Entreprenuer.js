@@ -52,10 +52,10 @@ const Entreprenuer = () => {
             inputYear: founded_year,
         }).then((response) => {
             console.log(response.data.predicted_business);
-            if (response.data.predicted_business <= 1) {
+            if (response.data.predicted_business == 1) {
                 // The id "taget" is in the Cards component, which is where the results will be shown 
                setPredict("The business in the next future will be successful");
-            } else {
+            } else if(response.data.predicted_business == 0 || response.data.predicted_business < 1) {
                 setPredict("The business in the next future will be unsuccessful.");
             }
         });
@@ -79,7 +79,7 @@ const Entreprenuer = () => {
                 </div>
             </div>
             {/* End of Top Header */}
-            <div>{predictMessge}</div>
+            
             {/* Tab */}
             <div className="container-fluid">
                 <div className="row">
@@ -91,7 +91,7 @@ const Entreprenuer = () => {
                                         <div className="row bg-white p-5 pt-0">
                                             <div className="col-sm col-md col-lg">&ensp;</div>
                                             <div className="col-sm col-md col-lg-8 rounded-md mt-5 p-5 border-1 text-slate-500">
-                                        
+                                            <div className="text-slate-800 font-bold text-2xl">{predictMessge}</div>
                                                 <div className="text-xs p-1">
                                                     <strong className="mt-6 text-center text-3xl font-extrabold text-gray-900">Predict Your Business</strong>
                                                     <p className="mt-2 text-center text-xs text-gray-600"> And{' '}
@@ -134,7 +134,7 @@ const Entreprenuer = () => {
                                                     <div className="row">
                                                         <div className="col-sm col-md col-lg text-left">
                                                             <br />
-                                                            <button type="submit" onClick={onSubmit} className="btn bg-primary login-with-google-btn btn-block form-control"><i className="bi bi-arrow-counterclockwise text-light"></i> Procces</button>
+                                                            <button type="button" onClick={onSubmit} className="btn bg-primary login-with-google-btn btn-block form-control"><i className="bi bi-arrow-counterclockwise text-light"></i> Procces</button>
                                                             <p className="pl-0 pt-4 text-xs font-medium text-blue-600">&ensp;</p>
                                                         </div>
                                                     </div>
