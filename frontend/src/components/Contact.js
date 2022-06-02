@@ -27,8 +27,8 @@ const Contact = () => {
           <div className="col-sm col-md col-lg">&ensp;</div>
           <div className="col-sm col-md col-lg-6  text-light">
             <br />
-            <h1 style={{ fontWeight: "bolder" }} className="display-5">Contact Mauris blandit aliquet elit</h1>
-            <p className="p-2 text-xs text-gray-100  text-center"> Sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus.</p>
+            <h1 style={{ fontWeight: "bolder" }} className="display-5">Contact Aivest</h1>
+            <p className="p-2 text-xs text-gray-100  text-center"> For any queries please send us a message</p>
           </div>
           <div className="col-sm col-md col-lg">&ensp;</div>
         </div>

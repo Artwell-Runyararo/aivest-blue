@@ -1,1 +1,20 @@
-{"data_columns": ["funding_total_usd", "founded_year", "category_list_advertising", "category_list_biotechnology", "category_list_clean technology", "category_list_curated web", "category_list_e-commerce", "category_list_enterprise software", "category_list_hardware + software", "category_list_health care", "category_list_health and wellness", "category_list_manufacturing", "category_list_mobile", "category_list_semiconductors", "category_list_software", "category_list_other"]}
+{
+    "data_columns": [
+        "funding_total_usd",
+        "founded_year",
+        "category_list_advertising",
+        "category_list_biotechnology",
+        "category_list_clean technology",
+        "category_list_curated web",
+        "category_list_e-commerce",
+        "category_list_enterprise software",
+        "category_list_hardware + software",
+        "category_list_health care",
+        "category_list_health and wellness",
+        "category_list_manufacturing",
+        "category_list_mobile",
+        "category_list_semiconductors",
+        "category_list_software",
+        "category_list_other"
+    ]
+}

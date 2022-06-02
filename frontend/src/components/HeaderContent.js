@@ -16,13 +16,13 @@ const WelcomeContent = () => {
         <div className="col-sm col-md col-lg-6 pt-2  text-light">
           <br />
           <h1 style={{ fontWeight: "bolder" }} className="display-5">
-            Mauris blandit aliquet elit
+            Source Of Venture Funding ...
           </h1>
+          <h4 style={{ fontWeight: "bolder" }} className="display-6">
+            The most trusted Investor entreprenure network!!!
+          </h4>
           <p className="p-2 text-xs text-gray-100  text-center">
-            Sollicitudin molestie malesuada. Mauris blandit aliquet elit,
-            eget tincidunt nibh pulvinar a. Mauris blandit aliquet elit, eget
-            tincidunt nibh pulvinar a, Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Proin eget tortor risus.
+          Get connected to the right financing for your business. Entrpreneurs are being funded, Why shouldnt you?
           </p>
         </div>
         <div className="col-sm col-md col-lg">&ensp;</div>

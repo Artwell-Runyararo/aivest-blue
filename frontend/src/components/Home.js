@@ -35,7 +35,7 @@ const Home = () => {
         <WelcomeContent />
       </div>
       <div>
-        <div className="p-5 mb-0 pb-0 text-slate-500"><p className="p-5 m-lg-5 text-xs mb-0 pb-0">Quisque velit nisi, pretium ut lacinia in, elementum id enim. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Nulla porttitor accumsan tincidunt. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec rutrum congue leo eget malesuada. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada.</p></div>
+        <div className="p-5 mb-0 pb-0 text-slate-500"><p className="p-5 m-lg-5 text-xs mb-0 pb-0">.</p></div>
         <Glass />
       </div>
       <div>

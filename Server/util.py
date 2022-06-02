@@ -1,8 +1,11 @@
 import json
 import pickle
 import numpy as np
+from flask import Flask
+from flask_cors import CORS, cross_origin
+app = Flask(__name__)
 
-
+cors = CORS(app)
 # Declaring global variables
 __categories = None
 __data_columns = None
@@ -21,8 +24,8 @@ def get_prediction_business(category_list,funding_total_usd,founded_year):
     x[1] = founded_year
     if(loc_index >= 0):
         x[loc_index] = 1
-    
-    return round(__model.predict([x])[0],2)
+    response =  round(__model.predict([x])[0],2)
+    return response
 # Get the categoriesname
 def get_categories_names():
     return __categories
@@ -42,8 +45,8 @@ def load_models():
     
 if __name__ == '__main__':
     load_models()
-    print(get_categories_names())
-    print(get_prediction_business('category_list_Software',500000,2022))
-    print(get_prediction_business('category_list_Curated Web',2000,2015))
-    print(get_prediction_business('category_list_Manufacturing',23500,2011))
+    # print(get_categories_names())
+    # print(get_prediction_business('category_list_Software',500000,2022))
+    # print(get_prediction_business('category_list_Curated Web',2000,2015))
+    # print(get_prediction_business('category_list_Manufacturing',23500,2011))
            

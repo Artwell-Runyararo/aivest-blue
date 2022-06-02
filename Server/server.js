@@ -1,22 +1,35 @@
-const express = require(`express`);
-const cors = require(`cors`);
-const connection = require('./db')
-const bcrypt = require(`bcrypt`)
-const bodyParser = require(`body-parser`)
-const cookieParser = require(`cookie-parser`)
-const session = require(`express-session`)
+import connection from './db.js';
+import bcrypt from 'bcrypt'
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 const saltRounds = 10
 const app = express();
-
+import fetch from 'node-fetch';
+import express from 'express'
+import axios from "axios";
 app.use(express.json());
 // Allowing sessions and cookies to communicate with our frontend and backend/ to use sessions and cookies
-app.use(cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true
-}));
+// app.use(cors({
+//     origin: ["http://localhost:3000"],
+//     methods: ["GET", "POST"],
+//     credentials: true
+// }));
+app.use((req, res, next) => {
+    const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:5000', 'http://localhost:4000'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Access-Control-Allow-Methods', 'GET, OPTIONS, POST');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+    return next();
+});
+
+
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Creating Session
 app.use(session({
@@ -25,7 +38,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 2 * 60 * 60 *1000,
+        expires: 2 * 60 * 60 * 1000,
     },
 }))
 
@@ -84,11 +97,63 @@ app.post('/login', (req, res) => {
 
 // Get Api for checking sessions if user is logged in or not
 app.get('/login', (req, res) => {
-if(req.session.user){
-    res.send({ loggedIn: true, user: req.session.user});
-}else{
-    res.send({ loggedIn: false});
-}
+    if (req.session.user) {
+        res.send({ loggedIn: true, user: req.session.user });
+    } else {
+        res.send({ loggedIn: false });
+    }
+})
+
+
+//Get data of category lit from Api then post it to front end
+
+//Get data of category lit from Api then post it to front end
+app.get('/categories', async (req, res) => {
+    const api_url = `http://127.0.0.1:5000`;
+    const fetch_response = await fetch(api_url);
+    const json = await fetch_response.json();
+    res.json(json);
+})
+
+
+// Predict  send and get response from the server
+app.post('/predict', (req, res) => {
+
+    const inCategory = req.body.inputCategory;
+    const inTotalFunding = req.body.inputTotalFunding;
+    const inYear = req.body.inputYear;
+
+    // Send requests to API ("data", a dictionary which contain user's total_funding and founding year)
+    axios({
+        method: "POST",
+        url: "http://127.0.0.1:5000/predict_business_success",
+        data: { "category_list": inCategory, "total_funding": inTotalFunding, "founded_year": inYear }
+        //  Receive a response either 0 or 1 and display the results on screen 
+    }).then((response) => {
+        const output = response.data
+        res.send(output)
+        console.log(output)
+
+    })
+
+
+
+    // if (output === 1) {
+    //     // The id "taget" is in the Cards component, which is where the results will be shown 
+    //     console.log(output)
+    //     res.send(output)
+    //     res.send({ message: "Your business will be successful." })
+    // } else {
+    //     console.log(output)
+    //     res.send(output)
+    //     res.send({ message: "Your business will be unsuccessful." })
+    // }
+
+
+    // connection.query(`INSERT INTO predict(category, fund, year) VALUES(?,?,?)`, [inCategory, inTotalFunding, inYear], (err) => {
+    //     if (err) console.log(err)
+    //     else res.send('Data send')
+    // })
 })
 // Creating localhost Port
 app.listen(4000, () => {
