@@ -8,6 +8,13 @@ const app = express();
 import fetch from 'node-fetch';
 import express from 'express'
 import axios from "axios";
+import path from 'path';
+import { fileURLToPath } from 'url';
+import multer from 'multer';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 app.use(express.json());
 // Allowing sessions and cookies to communicate with our frontend and backend/ to use sessions and cookies
 // app.use(cors({
@@ -119,9 +126,14 @@ app.get('/categories', async (req, res) => {
 // Predict  send and get response from the server
 app.post('/predict', (req, res) => {
 
+
     const inCategory = req.body.inputCategory;
     const inTotalFunding = req.body.inputTotalFunding;
     const inYear = req.body.inputYear;
+    const inCompany = req.body.inputCompany;
+    const inMarket = req.body.inputMarket;
+    const inAddress = req.body.inputAddress;
+    const inDescription = req.body.inputDescription;
 
     // Send requests to API ("data", a dictionary which contain user's total_funding and founding year)
     axios({
@@ -136,26 +148,50 @@ app.post('/predict', (req, res) => {
 
     })
 
-
-
-    // if (output === 1) {
-    //     // The id "taget" is in the Cards component, which is where the results will be shown 
-    //     console.log(output)
-    //     res.send(output)
-    //     res.send({ message: "Your business will be successful." })
-    // } else {
-    //     console.log(output)
-    //     res.send(output)
-    //     res.send({ message: "Your business will be unsuccessful." })
-    // }
-
-
-    // connection.query(`INSERT INTO predict(category, fund, year) VALUES(?,?,?)`, [inCategory, inTotalFunding, inYear], (err) => {
-    //     if (err) console.log(err)
-    //     else res.send('Data send')
-    // })
+    // Insert information into database
+    connection.query(`INSERT INTO businessproposals(companyname,markettarget,fund,yearFund,category,location,description) VALUES(?,?,?,?,?,?,?)`, [ inCompany,inMarket,inTotalFunding, inYear,inCategory, inAddress,inDescription], (err) => {
+        if (err) console.log(err)
+        else res.send('Data send')
+    })
 })
 // Creating localhost Port
+
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, './uploads/', 'images'),
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname)
+    }
+})
+
+app.post('/imageupload', async (req, res) => {
+    try {
+
+        let upload = multer({ storage: storage }).single('avatar');
+
+        upload(req, res, function (err) {
+
+            if (!req.file) {
+                return res.send('Please select an image to upload')
+            } else if (err instanceof multer.MulterError) {
+                return res.send(err)
+            } else if (err) {
+                return res.send(err)
+            }
+
+            const classifiedsadd = {
+                image: req.file.filename
+            }
+            const sql = `INSERT INTO upload SET ?`
+            connection.query(sql, classifiedsadd, (err) => {
+                if (err) throw err;
+                res.json({ success: 1 })
+            })
+        })
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 app.listen(4000, () => {
     console.log('Server running on port http://localhost:4000')
 })
