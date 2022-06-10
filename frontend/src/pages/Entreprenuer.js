@@ -17,7 +17,22 @@ const Entreprenuer = () => {
     const [targetMarket, setTargetMarket] = useState("");
     const [address, setAddress] = useState("");
     const [description, setDescription] = useState("");
+    const [loginStatus, setLoginStatus] = useState("");
+    const [userId, setID] = useState("");
 
+
+    // Checking the currect user account
+    // Load...////
+    useEffect(() => {
+        axios.get(`http://localhost:4000/login`).then((response) => {
+            if (response.data.loggedIn === true) {
+                // console.log(response)
+                setLoginStatus(response.data.user[0].ai_role);
+                setID(response.data.user[0].id);
+            }
+        })
+    }, []);
+    // //////
     // Getting user inputs from form field
     const handleInputChange = (event) => {
         setState(event.target.value);
@@ -48,7 +63,6 @@ const Entreprenuer = () => {
         userRef.current.focus();
     }, []);
     // End of Settting input field to focus
-
     // Inputs message error focus
     const [focused, setFocused] = useState(false)
     const [focused1, setFocused1] = useState(false)
@@ -81,11 +95,13 @@ const Entreprenuer = () => {
         axios.post("http://localhost:4000/predict", {
             inputCompany: company,
             inputMarket: targetMarket,
-            inputTotalFunding: total_funding,  
+            inputTotalFunding: total_funding,
             inputYear: founded_year,
             inputCategory: category,
             inputAddress: address,
             inputDescription: description,
+            inputRole: loginStatus,
+            inputId: userId,
         }).then((response) => {
             console.log(response.data.predicted_business);
             if (response.data.predicted_business === 1) {
@@ -96,7 +112,7 @@ const Entreprenuer = () => {
             }
         });
     };
-
+    // Upload image into database
     const [isSuccess, setSuccess] = useState(null);
     const [userInfo, setuserInfo] = useState({
         file: [],
@@ -109,6 +125,7 @@ const Entreprenuer = () => {
             filepreview: URL.createObjectURL(event.target.files[0]),
         })
     }
+    // Submitting Image
     const Submit = async () => {
         const formdata = new FormData();
         formdata.append('avatar', userInfo.file);
@@ -118,11 +135,11 @@ const Entreprenuer = () => {
         }).then(res => {
             console.warn(res);
             if (res.data.success === 1) {
-                setSuccess("Image upload successfully")
+                setSuccess("Business plan upload successfully")
             }
         })
     }
-
+    // The End of Uploading the image
 
     return (
         <>
@@ -153,6 +170,7 @@ const Entreprenuer = () => {
                                     <div className="container-fluid">
                                         <div className="row bg-white pt-0">
                                             <div className="col-sm col-md col-lg rounded-md mt-5 pt-5 border-1 text-slate-500">
+                                                {/* <div className="text-slate-800 font-bold text-2xl">{loginStatus}</div> */}
                                                 <div className="text-slate-800 font-bold text-2xl">{predictMessge}</div>
                                                 <div className="text-xs p-1">
                                                     <strong className="mt-6 text-center text-3xl font-extrabold text-gray-900">Predict Your Business</strong>
@@ -239,18 +257,19 @@ const Entreprenuer = () => {
                                                                 {/* End of 5th Section Row4*/}
                                                             </div>
                                                             {/* End of First Side */}
-                                                            {/* Second Side */}
-                                                            <div className="col-sm col-md col-lg">
+                                                          {/* Second Side */}
+                                                          <div style={{borderRadius: "10px"}}className="col-sm col-md col-lg bg-light p-5 ">
+                                                            <div className="text-slate-900 font-bold text-2xl p-5">Upload your business plan</div>
                                                                 {isSuccess !== null ? <h4>{isSuccess}</h4> : null}
                                                                 <div className="form-group">
                                                                     <input type="file" name="avatar" onChange={handleInputChangeUpload} />
                                                                 </div>
-                                                                <div className="form-group">
-                                                                    <button type="submit" className="btn btn-dark" name="upload_file" onClick={() => Submit()}>Save</button>
+                                                                <div className="form-group p-4">
+                                                                    <button type="submit" className="btn btn-primary btn-block w-50" name="upload_file" onClick={() => Submit()}>Save</button>
                                                                 </div>
 
                                                                 <div className="form-group">
-                                                                 {userInfo.filepreview !== null ? <img className="img-fluid previewing" src={userInfo.filepreview} alt="UploadImage" /> : null}
+                                                                    {userInfo.filepreview !== null ? <img className="img-fluid previewing" src={userInfo.filepreview} alt="UploadImage" /> : null}
                                                                 </div>
                                                             </div>
                                                             {/* End of Second Side */}

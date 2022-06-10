@@ -110,8 +110,6 @@ app.get('/login', (req, res) => {
         res.send({ loggedIn: false });
     }
 })
-
-
 //Get data of category lit from Api then post it to front end
 
 //Get data of category lit from Api then post it to front end
@@ -125,8 +123,6 @@ app.get('/categories', async (req, res) => {
 
 // Predict  send and get response from the server
 app.post('/predict', (req, res) => {
-
-
     const inCategory = req.body.inputCategory;
     const inTotalFunding = req.body.inputTotalFunding;
     const inYear = req.body.inputYear;
@@ -134,6 +130,8 @@ app.post('/predict', (req, res) => {
     const inMarket = req.body.inputMarket;
     const inAddress = req.body.inputAddress;
     const inDescription = req.body.inputDescription;
+    const inRole = req.body.inputRole;
+    const IdNumber = req.body.inputId;
 
     // Send requests to API ("data", a dictionary which contain user's total_funding and founding year)
     axios({
@@ -144,25 +142,25 @@ app.post('/predict', (req, res) => {
     }).then((response) => {
         const output = response.data
         res.send(output)
-        console.log(output)
+        // console.log(output)
 
     })
 
     // Insert information into database
-    connection.query(`INSERT INTO businessproposals(companyname,markettarget,fund,yearFund,category,location,description) VALUES(?,?,?,?,?,?,?)`, [ inCompany,inMarket,inTotalFunding, inYear,inCategory, inAddress,inDescription], (err) => {
+    connection.query(`INSERT INTO businessproposals(idnum,companyname,markettarget,fund,yearFund,category,location,description,role) VALUES(?,?,?,?,?,?,?,?,?)`, [IdNumber, inCompany, inMarket, inTotalFunding, inYear, inCategory, inAddress, inDescription, inRole], (err) => {
         if (err) console.log(err)
-        else res.send('Data send')
     })
-})
-// Creating localhost Port
 
+})
+
+// Multer and data storage for our image upload
 const storage = multer.diskStorage({
     destination: path.join(__dirname, './uploads/', 'images'),
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
     }
 })
-
+// Getting image data from user input and upload it into database
 app.post('/imageupload', async (req, res) => {
     try {
 
@@ -171,7 +169,7 @@ app.post('/imageupload', async (req, res) => {
         upload(req, res, function (err) {
 
             if (!req.file) {
-                return res.send('Please select an image to upload')
+                return res.send('Please select an pdf to upload')
             } else if (err instanceof multer.MulterError) {
                 return res.send(err)
             } else if (err) {
@@ -192,6 +190,32 @@ app.post('/imageupload', async (req, res) => {
     }
 })
 
+// connection.query(`SELECT * FROM businessproposals WHERE  role='Entreprenuer'`, 
+// (err, response) => {
+//     if (err) console.log(err)
+//     else console.log(response)
+// })
+// Getting data of investors or entreprenier from database
+app.post('/api_url', (req, res) => {
+
+    const inRole = req.body.inputDataRole;
+    // Getting information from  the database
+    // console.log(inRole);
+    if (inRole == 'Entreprenuer') {
+        connection.query(`SELECT * FROM businessproposals WHERE role = 'Investor'`,
+            (err, response) => {
+                if (err) console.log(err)
+                else res.send(response)
+            })
+    } else if(inRole == 'Investor') {
+        connection.query(`SELECT * FROM businessproposals WHERE role = 'Entreprenuer'`,
+            (err, response) => {
+                if (err) console.log(err)
+                else res.send(response)
+            })
+    }
+})
+// Creating localhost Port
 app.listen(4000, () => {
     console.log('Server running on port http://localhost:4000')
 })

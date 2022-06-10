@@ -11,7 +11,6 @@ __categories = None
 __data_columns = None
 __model = None
 
-
 # Get the values for prediction and predict.
 def get_prediction_business(category_list,funding_total_usd,founded_year):
     try:
