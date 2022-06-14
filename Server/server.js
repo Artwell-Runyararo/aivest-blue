@@ -132,6 +132,12 @@ app.post('/predict', (req, res) => {
     const inDescription = req.body.inputDescription;
     const inRole = req.body.inputRole;
     const IdNumber = req.body.inputId;
+    const inputV1 =  req.body.inputVariable1
+    const inputV2 =  req.body.inputVariable2
+    const inputV3 =  req.body.inputVariable3
+    const inputV4 =  req.body.inputVariable4
+    const inputV5 =  req.body.inputVariable5
+    const inputV6 =  req.body.inputVariable6
 
     // Send requests to API ("data", a dictionary which contain user's total_funding and founding year)
     axios({
@@ -147,7 +153,7 @@ app.post('/predict', (req, res) => {
     })
 
     // Insert information into database
-    connection.query(`INSERT INTO businessproposals(idnum,companyname,markettarget,fund,yearFund,category,location,description,role) VALUES(?,?,?,?,?,?,?,?,?)`, [IdNumber, inCompany, inMarket, inTotalFunding, inYear, inCategory, inAddress, inDescription, inRole], (err) => {
+    connection.query(`INSERT INTO businessproposals(idnum,companyname,markettarget,fund,yearFund,category,location,mopportunity,rtime,customers,sales,growth,mshare,description,role) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [IdNumber, inCompany, inMarket, inTotalFunding, inYear, inCategory, inAddress,inputV1,inputV2,inputV3,inputV4,inputV5,inputV6, inDescription, inRole], (err) => {
         if (err) console.log(err)
     })
 
@@ -190,11 +196,6 @@ app.post('/imageupload', async (req, res) => {
     }
 })
 
-// connection.query(`SELECT * FROM businessproposals WHERE  role='Entreprenuer'`, 
-// (err, response) => {
-//     if (err) console.log(err)
-//     else console.log(response)
-// })
 // Getting data of investors or entreprenier from database
 app.post('/api_url', (req, res) => {
 
@@ -207,7 +208,7 @@ app.post('/api_url', (req, res) => {
                 if (err) console.log(err)
                 else res.send(response)
             })
-    } else if(inRole == 'Investor') {
+    } else if (inRole == 'Investor') {
         connection.query(`SELECT * FROM businessproposals WHERE role = 'Entreprenuer'`,
             (err, response) => {
                 if (err) console.log(err)
@@ -215,6 +216,53 @@ app.post('/api_url', (req, res) => {
             })
     }
 })
+
+
+
+// Sending Messages and Receiving messages
+app.post('/message', (req, res) => {
+
+    const inMessage = req.body.inputMesage;
+    const inMail = req.body.inputMail;
+    const inForeign = req.body.inputForeign;
+    const inStatus = req.body.inputStatus;
+
+    connection.query(`INSERT INTO  messages(emailmessage, idtwo, mail, messagestatus) VALUES(?,?,?,?)`, [inMessage, inForeign, inMail, inStatus], (err) => {
+        if (err) console.log(err)
+        else res.send('Request was send successfully')
+    })
+})
+// End of message sending
+
+
+// Getting Received Messages
+app.post('/get', (req, res) => {
+    const messageId = req.body.inputMessageUserId;
+    // console.log(messageId)
+    connection.query(`SELECT * FROM  messages  WHERE idtwo = ?`, [messageId],
+        (err, response) => {
+            if (err) console.log(err)
+            else {
+                res.send(response) 
+            }
+        })
+})
+// Update the table when the message is confirmed
+app.post('/confirm', (req, res) => {
+
+    const mm = req.body.messageupdate;
+    const ss = req.body.statusupdate;
+    const dd = req.body.updataid;
+    const ee = req.body.updateEmail;
+    console.log(ee)
+    connection.query(`UPDATE messages  SET messagestatus = ?, mail = ? WHERE idtwo= ? AND emailmessage=?`, [ss,mm,dd,ee],
+        (err, response) => {
+            console.log(response)
+            if (err) console.log(err)
+            else res.send(response)
+        })
+})
+
 // Creating localhost Port
 app.listen(4000, () => {
     console.log('Server running on port http://localhost:4000')

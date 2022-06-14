@@ -8,17 +8,19 @@ const WelcomeContent = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-sm col-md col-lg">&ensp;</div>
-        <div className="col-sm col-md col-lg-6 pt-2  text-light">
+        <div className="col-sm col-md col-lg pt-2  text-light">
           <br />
-          <h1 style={{ fontWeight: "bolder" }} className="display-5">
-            Source Of Venture Funding ...
-          </h1>
-          <h4 style={{ fontWeight: "bolder" }} className="display-6">
+          <h1 className="display-5 fw-bolder"> Source Of Venture Funding</h1>
+          {/* <h4 style={{ fontWeight: "bolder" }} className="display-6">
             The most trusted Investor entreprenure network!!!
-          </h4>
+          </h4> */}
           <p className="p-2 text-xs text-gray-100  text-center">
           Get connected to the right financing for your business. Entrpreneurs are being funded, Why shouldnt you?
           </p>
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
         <div className="col-sm col-md col-lg">&ensp;</div>
       </div>

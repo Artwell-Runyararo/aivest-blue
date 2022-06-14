@@ -5,7 +5,7 @@ import "./Background.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>;
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />;
 
 const Login = () => {
 
@@ -15,7 +15,7 @@ const Login = () => {
   const [loginStatus, setLoginStatus] = useState("");
 
   axios.defaults.withCredentials = true;
-  
+
   // Setting /Taking the values from user input
   const onChangehandleInputValue = (event) => {
     setEmailLogin(event.target.value);
@@ -45,7 +45,14 @@ const Login = () => {
     userRef.current.focus();
   }, []);
   // End of Settting input field to focus
-
+  const [focused1, setFocused1] = useState(false)
+  const [focused5, setFocused5] = useState(false)
+  const handleFocus1 = (e) => {
+    setFocused1(true)
+  }
+  const handleFocus5 = (e) => {
+    setFocused5(true)
+  }
   // ////
   useEffect(() => {
     axios.get(`http://localhost:4000/login`).then((response) => {
@@ -61,10 +68,10 @@ const Login = () => {
       <br />
       <div className="container-fluid">
         <div className="row pt-0 p-5  bg-white">
-          
+
           <div className="col-sm col-md col-lg ">&ensp;</div>
           <div className="col-sm col-md col-lg rounded-md mt-5 p-5 border-1 text-slate-500">
-          <p className="text-dark">{loginStatus}</p>
+            <p className="text-dark">{loginStatus}</p>
             <div className="text-left">
               <div className="text-xs p-1">
                 <strong className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</strong>
@@ -78,14 +85,16 @@ const Login = () => {
               {/* 1st Section Row1 */}
               <div className="form-group text-left">
                 <label className="text-left p-2"> <i className="bi bi-envelope-fill"></i> Email</label>
-                <input required ref={userRef} onChange={onChangehandleInputValue} pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" value={email} type="text" className="form-control text-xs bg-slate-900" placeholder="Enter your email address"
+                <input required ref={userRef} aria-describedby="emailHelpBlock" onChange={onChangehandleInputValue} onBlur={handleFocus1} focused={focused1.toString()} pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" value={email} type="text" className="form-control text-xs bg-slate-900" placeholder="Enter your email address"
                 />
+                <div id="emailHelpBlock" className="form-text  formtext text-danger">Inserted email is invalid, Please provide vaild email.</div>
               </div>
               <div className="form-group  text-left">
                 <label className="text-left p-2">
                   <i className="bi bi-key-fill"></i> Password
                 </label>
-                <input required autoComplete="cc-csc" type="password" onChange={onChangehandleInputValue2} value={password} placeholder="Enter your password" className="form-control text-xs" />
+                <input onBlur={handleFocus5} focused={focused5.toString()} required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&:;])[A-Za-z\d@$!%*#?&:;]{8,20}$" aria-describedby="passwordHelpBlock" autoComplete="cc-csc" type="password" onChange={onChangehandleInputValue2} value={password} placeholder="Enter your password" className="form-control text-xs" />
+                <div id="passwordHelpBlock" className="form-text formtext text-danger">Minimum 8-20 characters, at least one letter, one number and one special character</div>
               </div>
               {/* End of 1st Section Row1 */}
 

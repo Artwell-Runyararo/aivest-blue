@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from "react";
+import React, { useRef, useEffect } from "react";
 import "./Fonts/Font.css";
 import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,8 +27,15 @@ const Contact = () => {
           <div className="col-sm col-md col-lg">&ensp;</div>
           <div className="col-sm col-md col-lg-6  text-light">
             <br />
-            <h1 style={{ fontWeight: "bolder" }} className="display-5">Contact Aivest</h1>
+            <br />
+            <h1 style={{ fontWeight: "bolder" }} className="display-5">Contact Us</h1>
             <p className="p-2 text-xs text-gray-100  text-center"> For any queries please send us a message</p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          
           </div>
           <div className="col-sm col-md col-lg">&ensp;</div>
         </div>
@@ -42,13 +49,13 @@ const Contact = () => {
           <div className="row bg-white ">
             <div className="col-sm col-md col-lg-2 ">&ensp;</div>
             <div className="col-sm col-md col-lg rounded-md mt-5 mb-5 p-5 border-1 text-slate-500">
-            <div className="text-xs p-1">
+              <div className="text-xs p-1">
                 <strong className="mt-6 text-center text-3xl font-extrabold text-gray-900">Drop your message here</strong>
                 <p className="mt-2 text-center text-xs text-gray-600"> And{' '}
                   <span style={{ textDecoration: 'none !important' }} className="font-medium text-primary hover:text-green-500"> our team will responed to you quickly</span>
                 </p>
               </div>
-            <br/>
+              <br />
               <form>
                 {/* 1st Section Row1 */}
                 <div className="row">
@@ -98,7 +105,7 @@ const Contact = () => {
           </div>
         </div>
         <div>
-          <Footer/>
+          <Footer />
         </div>
       </div>
     </>
